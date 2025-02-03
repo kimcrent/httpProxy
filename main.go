@@ -5,16 +5,24 @@ import (
 	"net"
 )
 
-func listner() {
-	conn, err := net.Listen("tcp", "195.96.147.217:64902")
+func main() {
+	listner, err := net.Listen("tcp", "195.96.147.217:64902")
 	if err != nil {
 		log.Fatalf("Ошибка при запуске сервера: %v", err)
 	}
-	defer conn.Close()
+	defer listner.Close()
+	log.Println("Сервер запущен на порту :64902")
+
+	for {
+		conn, err := listner.Accept()
+		if err != nil {
+			log.Printf("Ошибка при принятии соединения: %v", err)
+			continue
+		}
+		go handleConnetion(conn)
+	}
 
 }
-
-func main() {
-	listner()
-
+func handleConnetion() {
+	defer conn.Close()
 }
